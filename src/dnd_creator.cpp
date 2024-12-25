@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <cstdlib> // Para usar rand()
-#include <limits>  // Para limpiar la entrada inválida
 
 using namespace std;
 
@@ -18,6 +17,7 @@ enum Clase {
     Clerigo,
     Monje,
     Paladin,
+    Artificiero,
     Ninguna // Para cuando no se haya asignado aún.
 };
 
@@ -41,6 +41,7 @@ string claseToString(Clase c) {
         case Clerigo: return "Clerigo";
         case Monje: return "Monje";
         case Paladin: return "Paladin";
+        case Artificiero: return "Artificiero";
         case Ninguna: return "Sin clase";
     }
     return "Desconocida";
@@ -48,25 +49,44 @@ string claseToString(Clase c) {
 
 void mostrarMenuClases() {
     cout << "=== Seleccion de Clase ===" << endl;
-    for (int i = 1; i <= 12; i++) {
-        cout << i << ". " << claseToString(static_cast<Clase>(i - 1)) << endl;
-    }
-    cout << "Selecciona una clase (1-12): ";
+    cout << "1. Barbaro" << endl;
+    cout << "2. Guerrero" << endl;
+    cout << "3. Bardo" << endl;
+    cout << "4. Druida" << endl;
+    cout << "5. Brujo" << endl;
+    cout << "6. Mago" << endl;
+    cout << "7. Hechicero" << endl;
+    cout << "8. Picaro" << endl;
+    cout << "9. Explorador" << endl;
+    cout << "10. Clerigo" << endl;
+    cout << "11. Monje" << endl;
+    cout << "12. Paladin" << endl;
+    cout << "13. Artificiero" << endl;
+    cout << "Selecciona una clase (1-13): ";
 }
 
 Clase seleccionarClase() {
     int opcion;
-    do {
-        mostrarMenuClases();
-        cin >> opcion;
-        if (cin.fail() || opcion < 1 || opcion > 12) {
-            cout << "Opcion no valida. Intenta de nuevo." << endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        } else {
-            return static_cast<Clase>(opcion - 1);
-        }
-    } while (true);
+    mostrarMenuClases();
+    cin >> opcion;
+    switch (opcion) {
+        case 1: return Barbaro;
+        case 2: return Guerrero;
+        case 3: return Bardo;
+        case 4: return Druida;
+        case 5: return Brujo;
+        case 6: return Mago;
+        case 7: return Hechicero;
+        case 8: return Picaro;
+        case 9: return Explorador;
+        case 10: return Clerigo;
+        case 11: return Monje;
+        case 12: return Paladin;
+        case 13: return Artificiero;
+        default:
+            cout << "Opcion no valida. Se asignara 'Sin clase'." << endl;
+            return Ninguna;
+    }
 }
 
 void mostrarMenu() {
@@ -84,31 +104,6 @@ int tirarDado() {
     return rand() % 20 + 1;
 }
 
-int pedirAtributo(const string& nombreAtributo) {
-    int valor;
-    do {
-        cout << "Introduce el nivel de " << nombreAtributo << " (0-20): ";
-        cin >> valor;
-        if (cin.fail() || valor < 0 || valor > 20) {
-            cout << "Valor invalido. Intenta de nuevo." << endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        } else {
-            return valor;
-        }
-    } while (true);
-}
-
-void asignarAtributosManual(Personaje& p) {
-    p.fuerza = pedirAtributo("fuerza");
-    p.destreza = pedirAtributo("destreza");
-    p.inteligencia = pedirAtributo("inteligencia");
-    p.constitucion = pedirAtributo("constitucion");
-    p.sabiduria = pedirAtributo("sabiduria");
-    p.carisma = pedirAtributo("carisma");
-    cout << "Atributos asignados con exito." << endl;
-}
-
 void asignarAtributosAleatorios(Personaje& p) {
     p.fuerza = tirarDado();
     p.destreza = tirarDado();
@@ -120,8 +115,8 @@ void asignarAtributosAleatorios(Personaje& p) {
 }
 
 void mostrarDetalles(const Personaje& p) {
-    cout << "\n=== Detalles del Personaje ===" << endl;
-    cout << "Nombre: " << (p.nombre.empty() ? "No asignado" : p.nombre) << endl;
+    cout << "=== Detalles del Personaje ===" << endl;
+    cout << "Nombre: " << p.nombre << endl;
     cout << "Clase: " << claseToString(p.clase) << endl;
     cout << "Fuerza: " << p.fuerza << endl;
     cout << "Destreza: " << p.destreza << endl;
@@ -138,7 +133,7 @@ int main() {
     do {
         mostrarMenu();
         cin >> opcion;
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore();
 
         switch (opcion) {
             case 1:
@@ -151,7 +146,19 @@ int main() {
                 cout << "Clase asignada con exito." << endl;
                 break;
             case 3:
-                asignarAtributosManual(personaje);
+                cout << "Introduce el nivel de fuerza (0-20): ";
+                cin >> personaje.fuerza;
+                cout << "Introduce el nivel de destreza (0-20): ";
+                cin >> personaje.destreza;
+                cout << "Introduce el nivel de inteligencia (0-20): ";
+                cin >> personaje.inteligencia;
+                cout << "Introduce el nivel de constitucion (0-20): ";
+                cin >> personaje.constitucion;
+                cout << "Introduce el nivel de sabiduria (0-20): ";
+                cin >> personaje.sabiduria;
+                cout << "Introduce el nivel de carisma (0-20): ";
+                cin >> personaje.carisma;
+                cout << "Atributos asignados con exito." << endl;
                 break;
             case 4:
                 asignarAtributosAleatorios(personaje);
@@ -163,7 +170,7 @@ int main() {
                 cout << "Saliendo del programa." << endl;
                 break;
             default:
-                cout << "Opcion no valida. Intenta de nuevo." << endl;
+                cout << "Opcion no valida." << endl;
                 break;
         }
         cout << endl;
