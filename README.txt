@@ -30,4 +30,5 @@ HOOKS:
     - Se ha creado el hook post-commit, que después de hacer git commit -m "", se realiza
     un push de manera automática
 
-    - (Probando otro hook)
+    - Se ha añadido un hook que comprueba que no hayan commits sin mensajes, mostrando
+    un mensaje de error si lo intentamos.
