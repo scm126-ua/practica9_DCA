@@ -17,7 +17,7 @@ enum Clase {
     Clerigo,
     Monje,
     Paladin,
-    Artificiero,metiendo otro error
+    Artificiero,
     Ninguna // Para cuando no se haya asignado aún.
 };
 
@@ -29,6 +29,7 @@ struct Personaje {
     int iniciativa = 0;
     bool inspiracion = false;
     int HP = 0;
+    int HP_TEMP = 0;
     int velocidad = 0;
 };
 
