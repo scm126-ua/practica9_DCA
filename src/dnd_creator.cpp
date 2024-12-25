@@ -28,6 +28,7 @@ struct Personaje {
     int armor_class = 0;
     int iniciativa = 0;
     bool inspiracion = false;
+    int HP = 0;
 };
 
 string claseToString(Clase c) {
@@ -90,6 +91,30 @@ Clase seleccionarClase() {
             cout << "Opcion no valida. Se asignara 'Sin clase'." << endl;
             return Ninguna;
     }
+}
+
+void calcularHP(Personaje &p){
+    int dadoGolpe = 0;
+    switch (p.clase) {
+        case Barbaro: dadoGolpe = 12; break;
+        case Guerrero: dadoGolpe = 10; break;
+        case Paladin: dadoGolpe = 10; break;
+        case Explorador: dadoGolpe = 10; break;
+        case Monje: dadoGolpe = 8; break;
+        case Picaro: dadoGolpe = 8; break;
+        case Clerigo: dadoGolpe = 8; break;
+        case Druida: dadoGolpe = 8; break;
+        case Hechicero: dadoGolpe = 6; break;
+        case Brujo: dadoGolpe = 8; break;
+        case Mago: dadoGolpe = 6; break;
+        case Bardo: dadoGolpe = 8; break;
+        case Artificiero: dadoGolpe = 8; break;
+        default:
+            cout << "Clase desconocida. No se puede calcular el HP." << endl;
+            return;
+    }
+
+    p.HP = dadoGolpe;
 }
 
 void mostrarMenu() {
@@ -169,6 +194,7 @@ void mostrarDetalles(const Personaje& p) {
     cout << "Sabiduria: " << p.sabiduria << endl;
     cout << "Carisma: " << p.carisma << endl;
     cout << endl;
+    cout << "HP: " << p.HP << endl;
     cout << "Iniciativa: " << p.iniciativa << endl;
     cout << "AC: " << p.armor_class << endl;
     
@@ -188,7 +214,7 @@ int main() {
     do {
         mostrarMenu();
         cin >> opcion;
-        cin.ignore();fallo
+        cin.ignore();
 
         switch (opcion) {
             case 1:
@@ -198,6 +224,7 @@ int main() {
                 break;
             case 2:
                 personaje.clase = seleccionarClase();
+                calcularHP(personaje);
                 cout << "Clase asignada con exito." << endl;
                 break;
             case 3:
