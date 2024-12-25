@@ -29,7 +29,7 @@ struct Personaje {
     int iniciativa = 0;
     bool inspiracion = false;
     int HP = 0;
-    int velocidad = 0; otro fallo
+    int velocidad = 0;
 };
 
 string claseToString(Clase c) {
