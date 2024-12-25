@@ -174,7 +174,7 @@ void mostrarDetalles(const Personaje& p) {
     
     if(p.inspiracion)
         cout << "Inspirado" << endl;
-        
+
     else
         cout << "Sin inspiracion" << endl;
 
@@ -188,7 +188,7 @@ int main() {
     do {
         mostrarMenu();
         cin >> opcion;
-        cin.ignore();
+        cin.ignore();fallo
 
         switch (opcion) {
             case 1:
