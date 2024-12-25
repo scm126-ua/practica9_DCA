@@ -16,7 +16,7 @@ enum Clase {
     Explorador,
     Clerigo,
     Monje,
-    Paladin,sjsofsdofn
+    Paladin,
     Artificiero,
     Ninguna // Para cuando no se haya asignado aún.
 };
