@@ -27,6 +27,7 @@ struct Personaje {
     int fuerza = 0, destreza = 0, inteligencia = 0, constitucion = 0, sabiduria = 0, carisma = 0;
     int armor_class = 0;
     int iniciativa = 0;
+    bool inspiracion = false;
 };
 
 string claseToString(Clase c) {
@@ -99,8 +100,9 @@ void mostrarMenu() {
     cout << "4. Asignar atributos aleatorios (tirar dados)" << endl;
     cout << "5. Calcular Clase de Armadura (AC)" << endl;
     cout << "6. Calcular Iniciativa" << endl;
-    cout << "7. Mostrar detalles del personaje" << endl;
-    cout << "8. Salir" << endl;
+    cout << "7. Dar inspiracion" << endl;
+    cout << "8. Mostrar detalles del personaje" << endl;
+    cout << "9. Salir" << endl;
     cout << "Selecciona una opcion: ";
 }
 
@@ -150,6 +152,11 @@ void calcularIniciativa(Personaje& p) {
     cout << "La iniciativa del personaje es: " << p.iniciativa << endl;
 }
 
+void darInspiracion(Personaje& p){
+    p.inspiracion = true;
+    cout << "Punto de inspiración asignado" << endl;
+}
+
 
 void mostrarDetalles(const Personaje& p) {
     cout << "=== Detalles del Personaje ===" << endl;
@@ -161,6 +168,17 @@ void mostrarDetalles(const Personaje& p) {
     cout << "Constitucion: " << p.constitucion << endl;
     cout << "Sabiduria: " << p.sabiduria << endl;
     cout << "Carisma: " << p.carisma << endl;
+    cout << endl;
+    cout << "Iniciativa: " << p.iniciativa << endl;
+    cout << "AC: " << p.armor_class << endl;
+    
+    if(p.inspiracion)
+        cout << "Inspirado" << endl;
+        
+    else
+        cout << "Sin inspiracion" << endl;
+
+    
 }
 
 int main() {
@@ -209,17 +227,24 @@ int main() {
                 break;
 
             case 7:
+                darInspiracion(personaje);
+                break;
+
+            case 8:
                 mostrarDetalles(personaje);
                 break;
-            case 8:
+            
+            case 9:
                 cout << "Saliendo del programa." << endl;
                 break;
+            
             default:
                 cout << "Opcion no valida." << endl;
                 break;
         }
         cout << endl;
-    } while (opcion != 7);
+
+    } while (opcion != 9);
 
     return 0;
 }
