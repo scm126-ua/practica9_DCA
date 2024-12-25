@@ -25,6 +25,7 @@ struct Personaje {
     string nombre;
     Clase clase = Ninguna;
     int fuerza = 0, destreza = 0, inteligencia = 0, constitucion = 0, sabiduria = 0, carisma = 0;
+    int armor_class = 0;
 };
 
 string claseToString(Clase c) {
@@ -95,10 +96,12 @@ void mostrarMenu() {
     cout << "2. Asignar clase del personaje" << endl;
     cout << "3. Asignar atributos manualmente" << endl;
     cout << "4. Asignar atributos aleatorios (tirar dados)" << endl;
-    cout << "5. Mostrar detalles del personaje" << endl;
-    cout << "6. Salir" << endl;
+    cout << "5. Calcular Clase de Armadura (AC)" << endl;
+    cout << "6. Mostrar detalles del personaje" << endl;
+    cout << "7. Salir" << endl;
     cout << "Selecciona una opcion: ";
 }
+
 
 int tirarDado() {
     return rand() % 20 + 1;
@@ -112,6 +115,31 @@ void asignarAtributosAleatorios(Personaje& p) {
     p.sabiduria = tirarDado();
     p.carisma = tirarDado();
     cout << "Atributos asignados aleatoriamente." << endl;
+}
+
+int calcularModificador(int atributo) {
+    return (atributo - 10) / 2;
+}
+
+void calcularArmorClass(Personaje& p) {
+    int baseAC = 10; // Base de la armadura sin equipo
+
+    // Modificador por destreza
+    int modDestreza = calcularModificador(p.destreza);
+
+    if (p.clase == Barbaro) {
+        // Bárbaros suman constitución a su AC si no llevan armadura
+        baseAC += calcularModificador(p.constitucion);
+    } else if (p.clase == Monje) {
+        // Monjes suman sabiduría y destreza a su AC si no llevan armadura
+        baseAC += calcularModificador(p.sabiduria);
+    }
+
+    baseAC += modDestreza;
+
+    p.armor_class = baseAC;
+
+    cout << "La Clase de Armadura (AC) ha sido calculada: " << p.armor_class << endl;
 }
 
 void mostrarDetalles(const Personaje& p) {
@@ -164,9 +192,12 @@ int main() {
                 asignarAtributosAleatorios(personaje);
                 break;
             case 5:
-                mostrarDetalles(personaje);
+                calcularArmorClass(personaje);
                 break;
             case 6:
+                mostrarDetalles(personaje);
+                break;
+            case 7:
                 cout << "Saliendo del programa." << endl;
                 break;
             default:
@@ -174,7 +205,7 @@ int main() {
                 break;
         }
         cout << endl;
-    } while (opcion != 6);
+    } while (opcion != 7);
 
     return 0;
 }
