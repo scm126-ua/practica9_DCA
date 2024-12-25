@@ -30,6 +30,7 @@ struct Personaje {
     bool inspiracion = false;
     int HP = 0;
     int nivel = 1;
+    bool tiradas_salvacion_muerte[3] = {true, true, true};
 };
 
 string claseToString(Clase c) {
@@ -51,6 +52,8 @@ string claseToString(Clase c) {
     }
     return "Desconocida";
 }
+
+
 
 void mostrarMenuClases() {
     cout << "=== Seleccion de Clase ===" << endl;
