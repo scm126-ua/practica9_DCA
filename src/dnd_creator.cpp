@@ -29,6 +29,7 @@ struct Personaje {
     int iniciativa = 0;
     bool inspiracion = false;
     int HP = 0;
+    int nivel = 1;
 };
 
 string claseToString(Clase c) {
