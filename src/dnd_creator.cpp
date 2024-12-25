@@ -26,6 +26,7 @@ struct Personaje {
     Clase clase = Ninguna;
     int fuerza = 0, destreza = 0, inteligencia = 0, constitucion = 0, sabiduria = 0, carisma = 0;
     int armor_class = 0;
+    int iniciativa = 0;
 };
 
 string claseToString(Clase c) {
@@ -97,8 +98,9 @@ void mostrarMenu() {
     cout << "3. Asignar atributos manualmente" << endl;
     cout << "4. Asignar atributos aleatorios (tirar dados)" << endl;
     cout << "5. Calcular Clase de Armadura (AC)" << endl;
-    cout << "6. Mostrar detalles del personaje" << endl;
-    cout << "7. Salir" << endl;
+    cout << "6. Calcular Iniciativa" << endl;
+    cout << "7. Mostrar detalles del personaje" << endl;
+    cout << "8. Salir" << endl;
     cout << "Selecciona una opcion: ";
 }
 
@@ -141,6 +143,13 @@ void calcularArmorClass(Personaje& p) {
 
     cout << "La Clase de Armadura (AC) ha sido calculada: " << p.armor_class << endl;
 }
+
+void calcularIniciativa(Personaje& p) {
+    int modDestreza = calcularModificador(p.destreza);
+    p.iniciativa = modDestreza;
+    cout << "La iniciativa del personaje es: " << p.iniciativa << endl;
+}
+
 
 void mostrarDetalles(const Personaje& p) {
     cout << "=== Detalles del Personaje ===" << endl;
@@ -194,10 +203,15 @@ int main() {
             case 5:
                 calcularArmorClass(personaje);
                 break;
+            
             case 6:
+                calcularIniciativa(personaje);
+                break;
+
+            case 7:
                 mostrarDetalles(personaje);
                 break;
-            case 7:
+            case 8:
                 cout << "Saliendo del programa." << endl;
                 break;
             default:
