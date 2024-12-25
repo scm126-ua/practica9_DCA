@@ -17,7 +17,7 @@ enum Clase {
     Clerigo,
     Monje,
     Paladin,
-    Artificiero,
+    Artificiero,metiendo otro error
     Ninguna // Para cuando no se haya asignado aún.
 };
 
