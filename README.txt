@@ -15,4 +15,16 @@ ALIAS GLOBALES CREADOS:
     log -> lg
     tag -> tg
 
+BISECT
+    En la rama mejora3 he creado varios commits marcados con mensajes como 
+    "Commit con error", "commit sin error". Cuando he tenido una alternancia
+    de commits, empecé con git bisect start, luego he ido marcando cada commit con: 
 
+        git bisect good
+        git bisect bad
+    
+    Segun tenia errores o no, y finalmente he utilizado git bisect reset para volver
+    al commit original del que empecé.
+
+HOOKS:
+    (Probando hook de push automático)
