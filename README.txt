@@ -27,4 +27,7 @@ BISECT
     al commit original del que empecé.
 
 HOOKS:
-    (Probando hook de push automático)
+    - Se ha creado el hook post-commit, que después de hacer git commit -m "", se realiza
+    un push de manera automática
+
+    - (Probando otro hook)
