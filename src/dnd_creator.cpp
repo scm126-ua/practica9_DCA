@@ -31,6 +31,8 @@ struct Personaje {
     int HP = 0;
     int nivel = 1;
     bool tiradas_salvacion_muerte[3] = {true, true, true};
+    int HP_TEMP = 0;
+    int velocidad = 0;
 };
 
 string claseToString(Clase c) {
