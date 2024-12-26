@@ -25,6 +25,12 @@ struct Personaje {
     string nombre;
     Clase clase = Ninguna;
     int fuerza = 0, destreza = 0, inteligencia = 0, constitucion = 0, sabiduria = 0, carisma = 0;
+    int armor_class = 0;
+    int iniciativa = 0;
+    bool inspiracion = false;
+    int HP = 0;
+    int HP_TEMP = 0;
+    int velocidad = 0;
 };
 
 string claseToString(Clase c) {
@@ -89,16 +95,44 @@ Clase seleccionarClase() {
     }
 }
 
+void calcularHP(Personaje &p){
+    int dadoGolpe = 0;
+    switch (p.clase) {
+        case Barbaro: dadoGolpe = 12; break;
+        case Guerrero: dadoGolpe = 10; break;
+        case Paladin: dadoGolpe = 10; break;
+        case Explorador: dadoGolpe = 10; break;
+        case Monje: dadoGolpe = 8; break;
+        case Picaro: dadoGolpe = 8; break;
+        case Clerigo: dadoGolpe = 8; break;
+        case Druida: dadoGolpe = 8; break;
+        case Hechicero: dadoGolpe = 6; break;
+        case Brujo: dadoGolpe = 8; break;
+        case Mago: dadoGolpe = 6; break;
+        case Bardo: dadoGolpe = 8; break;
+        case Artificiero: dadoGolpe = 8; break;
+        default:
+            cout << "Clase desconocida. No se puede calcular el HP." << endl;
+            return;
+    }
+
+    p.HP = dadoGolpe;
+}
+
 void mostrarMenu() {
     cout << "=== Creador de Personajes de D&D ===" << endl;
     cout << "1. Asignar nombre al personaje" << endl;
     cout << "2. Asignar clase del personaje" << endl;
     cout << "3. Asignar atributos manualmente" << endl;
     cout << "4. Asignar atributos aleatorios (tirar dados)" << endl;
-    cout << "5. Mostrar detalles del personaje" << endl;
-    cout << "6. Salir" << endl;
+    cout << "5. Calcular Clase de Armadura (AC)" << endl;
+    cout << "6. Calcular Iniciativa" << endl;
+    cout << "7. Dar inspiracion" << endl;
+    cout << "8. Mostrar detalles del personaje" << endl;
+    cout << "9. Salir" << endl;
     cout << "Selecciona una opcion: ";
 }
+
 
 int tirarDado() {
     return rand() % 20 + 1;
@@ -114,6 +148,43 @@ void asignarAtributosAleatorios(Personaje& p) {
     cout << "Atributos asignados aleatoriamente." << endl;
 }
 
+int calcularModificador(int atributo) {
+    return (atributo - 10) / 2;
+}
+
+void calcularArmorClass(Personaje& p) {
+    int baseAC = 10; // Base de la armadura sin equipo
+
+    // Modificador por destreza
+    int modDestreza = calcularModificador(p.destreza);
+
+    if (p.clase == Barbaro) {
+        // Bárbaros suman constitución a su AC si no llevan armadura
+        baseAC += calcularModificador(p.constitucion);
+    } else if (p.clase == Monje) {
+        // Monjes suman sabiduría y destreza a su AC si no llevan armadura
+        baseAC += calcularModificador(p.sabiduria);
+    }
+
+    baseAC += modDestreza;
+
+    p.armor_class = baseAC;
+
+    cout << "La Clase de Armadura (AC) ha sido calculada: " << p.armor_class << endl;
+}
+
+void calcularIniciativa(Personaje& p) {
+    int modDestreza = calcularModificador(p.destreza);
+    p.iniciativa = modDestreza;
+    cout << "La iniciativa del personaje es: " << p.iniciativa << endl;
+}
+
+void darInspiracion(Personaje& p){
+    p.inspiracion = true;
+    cout << "Punto de inspiración asignado" << endl;
+}
+
+
 void mostrarDetalles(const Personaje& p) {
     cout << "=== Detalles del Personaje ===" << endl;
     cout << "Nombre: " << p.nombre << endl;
@@ -124,6 +195,18 @@ void mostrarDetalles(const Personaje& p) {
     cout << "Constitucion: " << p.constitucion << endl;
     cout << "Sabiduria: " << p.sabiduria << endl;
     cout << "Carisma: " << p.carisma << endl;
+    cout << endl;
+    cout << "HP: " << p.HP << endl;
+    cout << "Iniciativa: " << p.iniciativa << endl;
+    cout << "AC: " << p.armor_class << endl;
+    
+    if(p.inspiracion)
+        cout << "Inspirado" << endl;
+
+    else
+        cout << "Sin inspiracion" << endl;
+
+    
 }
 
 int main() {
@@ -143,6 +226,7 @@ int main() {
                 break;
             case 2:
                 personaje.clase = seleccionarClase();
+                calcularHP(personaje);
                 cout << "Clase asignada con exito." << endl;
                 break;
             case 3:
@@ -164,17 +248,32 @@ int main() {
                 asignarAtributosAleatorios(personaje);
                 break;
             case 5:
+                calcularArmorClass(personaje);
+                break;
+            
+            case 6:
+                calcularIniciativa(personaje);
+                break;
+
+            case 7:
+                darInspiracion(personaje);
+                break;
+
+            case 8:
                 mostrarDetalles(personaje);
                 break;
-            case 6:
+            
+            case 9:
                 cout << "Saliendo del programa." << endl;
                 break;
+            
             default:
                 cout << "Opcion no valida." << endl;
                 break;
         }
         cout << endl;
-    } while (opcion != 6);
+
+    } while (opcion != 9);
 
     return 0;
 }
